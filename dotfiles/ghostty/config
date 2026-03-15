@@ -1,0 +1,44 @@
+# Keybinds.
+keybind = super+shift+enter=new_window
+keybind = super+shift+comma=reload_config
+keybind = delete=text:\x1b[3~
+
+# Window.
+window-height = 22
+window-width = 102
+background-opacity = 1
+
+# Cursor.
+cursor-style = underline
+cursor-style-blink = true
+shell-integration-features = no-cursor,sudo,title
+
+# Mouse
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+
+# Theme.
+palette = 0=#110f18
+palette = 1=#ff6767
+palette = 2=#61ffca
+palette = 3=#ffca85
+palette = 4=#a277ff
+palette = 5=#a277ff
+palette = 6=#61ffca
+palette = 7=#edecee
+palette = 8=#4d4d4d
+palette = 9=#ffca85
+palette = 10=#a277ff
+palette = 11=#ffca85
+palette = 12=#a277ff
+palette = 13=#a277ff
+palette = 14=#61ffca
+palette = 15=#edecee
+background = #15141b
+foreground = #edecee
+cursor-color = #a277ff
+cursor-text = #edecee
+selection-background = #a277ff
+selection-foreground = #edecee
+
+

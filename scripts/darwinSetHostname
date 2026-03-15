@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]; then
+    echo "You must pass a HostName as an argument."
+    echo "Example: ./setHostName MyMac"
+    exit
+fi
+
+sudo scutil --set ComputerName "$1"
+sudo scutil --set LocalHostName "$1"
+sudo scutil --set HostName "$1"
+dscacheutil -flushcache
+echo "You must reboot for changes to take effect."
+echo "After rebooting you can check with the command 'hostname'."

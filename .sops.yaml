@@ -1,0 +1,21 @@
+keys:
+  - &mini_age age197kkry0t339jh8ujf8k8tc8s5mgq7h2adhwjqnsavytgwnx9aanqxzc4sc # mini's machine age key
+  # - &laptop_age age1yyyy...      # laptop's machine age key (uncomment when key is generated)
+  - &scrubz_gpg 62235FCA76E7F50D25B5EBDA1CC87ECCC7A51A0D # scrubz's GPG fingerprint
+
+creation_rules:
+  - path_regex: secrets/common\.yaml$
+    key_groups:
+      - age: [*mini_age]
+        pgp: [*scrubz_gpg]
+  - path_regex: secrets/mini\.yaml$
+    key_groups:
+      - age: [*mini_age]
+        pgp: [*scrubz_gpg]
+  - path_regex: secrets/laptop\.yaml$
+    key_groups:
+      - pgp: [*scrubz_gpg]
+  - path_regex: secrets/scrubz\.yaml$
+    key_groups:
+      - age: [*mini_age]
+        pgp: [*scrubz_gpg]
