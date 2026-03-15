@@ -64,19 +64,9 @@ flake() {
                     esac ;;
                 *) echo "Usage: flake build {home|system}" ;;
             esac ;;
-        newModule)
-            case "$2" in
-                system) nix run "$HOME/Projects/nix-config#newModule" -- -s "$3" "$4" ;;
-                system-np) nix run "$HOME/Projects/nix-config#newModule" -- -sn "$3" "$4" ;;
-                bc) nix run "$HOME/Projects/nix-config#newModule" -- -bc "$3" "$4" ;;
-                bf) nix run "$HOME/Projects/nix-config#newModule" -- -bf "$3" "$4" ;;
-                home) nix run "$HOME/Projects/nix-config#newModule" -- -h "$3" "$4" ;;
-                *) echo "Usage: flake newModule {system|system-np|bc|bf|home} <category> <name>" ;;
-            esac ;;
         *)
             echo "Usage:"
-            echo "  flake build {home|system}"
-            echo "  flake newModule {system|system-np|bc|bf|home} <category> <name>" ;;
+            echo "  flake build {home|system}" ;;
     esac
 }
 

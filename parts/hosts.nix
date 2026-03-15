@@ -15,12 +15,15 @@ let
     # ~ Load host config and modules.
     loadHostConfig = hostName:
     let
-        raw = import ../hosts/${hostName}/config.nix;
-        userLib = import ../lib/users.nix { inherit lib; };
-    in raw // {
+        baseConfig = import ../hosts/${hostName}/config.nix;
+    in baseConfig // {
         users = builtins.mapAttrs (_: userConfig:
-            userLib.mkUserConfig userConfig
-        ) raw.users;
+            let
+                bundles = userConfig.bundles or [];
+                merged = foldl' recursiveUpdate {} (map import bundles);
+                config = removeAttrs userConfig [ "bundles" ];
+            in recursiveUpdate merged config
+        ) baseConfig.users;
     };
     systemModules = [ (inputs.import-tree [ ../modules/system ]) ];
     homebrewModules = [ (inputs.import-tree [ ../modules/homebrew ]) ];
@@ -49,9 +52,8 @@ let
             { _module.args.userConfig = userConfig; }
             { _module.args.userName = userName;   }
         ];
-        extraSpecialArgs = { inherit inputs hostConfig self; };
+        extraSpecialArgs = { inherit inputs hostConfig self myLib; };
     };
-
     # ~ Darwin host setup (system-level only; home-manager is standalone).
     mkDarwinHost = hostName: { system, ... }:
     let
@@ -86,7 +88,6 @@ let
             }
         ];
     };
-
     # ~ Linux host setup (system-level only; home-manager is standalone).
     mkNixosHost = hostName: { system, ... }:
     let
@@ -99,7 +100,7 @@ let
             inputs.sops-nix.nixosModules.sops
             (import ../hosts/${hostName})
             {
-                users.users = mapAttrs (name: userConfig: {
+                users.users = mapAttrs (name: _: {
                     name = name;
                     home = "/home/${name}";
                     isNormalUser = true;

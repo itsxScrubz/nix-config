@@ -1,8 +1,8 @@
 {
     bundles = [
-        ./pkgBundles/developer.nix
-        ./pkgBundles/creative.nix
-        ./pkgBundles/gaming.nix
+        # ./pkgBundles/developer.nix
+        # ./pkgBundles/creative.nix
+        # ./pkgBundles/gaming.nix
     ];
     git.userName = "itsxScrubz";
     git.userEmail = "49043506+itsxScrubz@users.noreply.github.com";
@@ -19,7 +19,7 @@
     # ~ Communication.
     discord.enable = true;
     # ~ Development.
-    nixLang.enable = true;
+    nil.enable = true;
     vscode.enable = true;
     # ~ Hardware.
     logitech-g-hub.enable = true;
@@ -33,11 +33,22 @@
     android-studio.enable = true;
     coreutils.enable = true;
     dockdoor.enable = true;
+    duti.enable = true;
     dockutil.enable = true;
     hiddenbar.enable = true;
     macAppUtil.enable = true;
     qspace-pro.enable = true;
     swift-shift.enable = true;
+    # ~ Settings.
+    vscode.extensionBundles = [
+        ./pkgBundles/vscode/core.nix
+        ./pkgBundles/vscode/web.nix
+        ./pkgBundles/vscode/devops.nix
+        ./pkgBundles/vscode/languages.nix
+        ./pkgBundles/vscode/data.nix
+        ./pkgBundles/vscode/git.nix
+    ];
+    # vscode.extraExtensions = [ "publisher.one-off-extension" ];
     masApps = {
         Xcode = 497799835;
         LINE = 539883307;

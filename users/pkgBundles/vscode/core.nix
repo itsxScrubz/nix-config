@@ -1,0 +1,15 @@
+[
+    "aaron-bond.better-comments"
+    "albert.tabout"
+    "adpyke.codesnap"
+    "arturodent.comment-blocks"
+    "atommaterial.a-file-icon-vscode"
+    "cardinal90.multi-cursor-case-preserve"
+    "editorconfig.editorconfig"
+    "johnpapa.vscode-peacock"
+    "kamikillerto.vscode-colorize"
+    "oderwat.indent-rainbow"
+    "seyyedkhandon.firacode"
+    "tonybaloney.vscode-pets"
+    "zhuangtongfa.material-theme"
+]

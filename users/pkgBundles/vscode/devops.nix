@@ -1,0 +1,13 @@
+[
+    "docker.docker"
+    "george3447.docker-run"
+    "ms-azuretools.vscode-containers"
+    "ms-vscode-remote.remote-containers"
+    "ms-vscode-remote.remote-ssh"
+    "ms-vscode-remote.remote-ssh-edit"
+    "ms-vscode.remote-explorer"
+    "ms-vscode.remote-repositories"
+    "ms-vscode.azure-repos"
+    "github.remotehub"
+    "github.vscode-github-actions"
+]
