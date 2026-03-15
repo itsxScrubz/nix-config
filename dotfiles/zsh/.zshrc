@@ -42,25 +42,24 @@ alias egrep='egrep --color=auto'
 alias gs="git status"
 alias gd="git diff"
 alias gl="git log --oneline --graph"
-alias gp="git push"
+alias gp="git push -u origin main"
+alias ga="git add ."
 
 # Keybinds.
 if [[ "$(uname)" == "Darwin" ]]; then
     bindkey '\e[3~' delete-char
 fi
 
-# ~ Sourcing.
-
 # ~ Custom Commands.
 flake() {
     case "$1" in
         build)
             case "$2" in
-                home) home-manager switch --flake ~/Projects/nix-config && source ~/.zshrc ;;
+                home) git -C ~/Projects/nix-config add . && home-manager switch --flake ~/Projects/nix-config && source ~/.zshrc ;;
                 system)
                     case "$(uname)" in
-                        Darwin) sudo darwin-rebuild switch --flake ~/Projects/nix-config ;;
-                        Linux) sudo nixos-rebuild switch --flake ~/Projects/nix-config ;;
+                        Darwin) git -C ~/Projects/nix-config add . && sudo darwin-rebuild switch --flake ~/Projects/nix-config ;;
+                        Linux) git -C ~/Projects/nix-config add . && sudo nixos-rebuild switch --flake ~/Projects/nix-config ;;
                         *) echo "Unsupported OS: $(uname)" ;;
                     esac ;;
                 *) echo "Usage: flake build {home|system}" ;;
@@ -80,3 +79,8 @@ flake() {
             echo "  flake newModule {system|system-np|bc|bf|home} <category> <name>" ;;
     esac
 }
+
+# ~ Plugins.
+(( $+commands[fzf] )) && source <(fzf --zsh)
+[[ -f $HOME/.zsh_plugins.zsh ]] && source $HOME/.zsh_plugins.zsh
+(( $+commands[zoxide] )) && source <(zoxide init zsh)

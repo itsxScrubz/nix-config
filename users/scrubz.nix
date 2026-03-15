@@ -7,12 +7,14 @@
     git.userName = "itsxScrubz";
     git.userEmail = "49043506+itsxScrubz@users.noreply.github.com";
     # ~ Browsers.
+    google-chrome.enable = false;
     vivaldi.enable = true;
     # ~ CLI.
     claude-code.enable = true;
     ghostty.enable = true;
     git.enable = true;
     mas.enable = true;
+    zoxide.enable = true;
     zsh.enable = true;
     # ~ Communication.
     discord.enable = true;
@@ -22,13 +24,17 @@
     # ~ Hardware.
     logitech-g-hub.enable = true;
     # ~ Utilities.
+    _1password.enable = true;
+    age.enable = true;
     expressvpn.enable = false;
     flameshot.enable = true;
     # ~ MacOS Specific.
     alt-tab.enable = true;
-    android-studio.enable = false;
+    android-studio.enable = true;
     coreutils.enable = true;
+    dockdoor.enable = true;
     dockutil.enable = true;
+    hiddenbar.enable = true;
     macAppUtil.enable = true;
     qspace-pro.enable = true;
     swift-shift.enable = true;
@@ -55,7 +61,7 @@
     dockutil.entries = [
         { path = "/Applications/QSpace Pro.app/"; }
         { path = "/Applications/Vivaldi.app/"; }
-        { path = "/Users/scrubz/Applications/Home Manager Apps/Discord.app/"; }
+        { path = "/Applications/Discord.app/"; }
         { path = "/Applications/Visual Studio Code.app/"; }
         { path = "/Applications/Xcode.app/"; }
         { path = "/Applications/Ghostty.app/"; }

@@ -4,8 +4,8 @@ keybind = super+shift+comma=reload_config
 keybind = delete=text:\x1b[3~
 
 # Window.
-window-height = 22
-window-width = 102
+window-height = 30
+window-width = 138
 background-opacity = 1
 
 # Cursor.

@@ -16,7 +16,7 @@
         static-only = false;
         launchanim = true;
         orientation = "bottom";
-        tilesize = 48;
+        tilesize = 36;
         mineffect = "scale";
     };
 }

@@ -4,8 +4,13 @@ let
 in {
     config = mkIf cfg.enable {
         home.packages = with pkgs; [
+            fzf
             zsh-autosuggestions
-            zsh-syntax-highlighting
+            zsh-fast-syntax-highlighting
         ];
+        home.file.".zsh_plugins.zsh".text = ''
+            source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+            source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+        '';
     };
 }
