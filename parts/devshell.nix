@@ -14,6 +14,7 @@
             gnupg
         ];
         shellHook = ''
+            git config --local core.hooksPath .githooks
             echo "🔧 NixOS flake dev shell ready."
             echo "   nixpkgs-fmt **/*.nix   — format all Nix files"
             echo "   statix check .         — lint"

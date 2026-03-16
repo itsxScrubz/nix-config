@@ -1,0 +1,254 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = 'light'
+add_newline = false
+
+format = """
+[░▒▓](white)\
+$os\
+$username\
+$hostname\
+[](bg:purple fg:white)\
+$directory\
+[](bg:yellow fg:purple)\
+$git_branch\
+$git_status\
+[](bg:green fg:yellow)\
+$nodejs\
+[](bg:blue fg:green)\
+$docker_context\
+$conda\
+$pixi\
+[](bg:white fg:blue)\
+$time\
+[▓▒░](white)\
+\n$character"""
+
+[palettes.dark]
+text = '#ffffff'
+white = '#ffffff'
+black = '#000000'
+blue = '#04177c'
+green = '#047c44'
+purple = '#6a047c'
+yellow = '#7c5504'
+red = '#7c0404'
+pink = '#7c0465'
+
+[palettes.light]
+text = '#31e608'
+white = '#ffffff'
+black = '#000000'
+blue = '#0908e6'
+green = '#31e608'
+purple = '#c351e8'
+yellow = '#e5e608'
+red = '#e63308'
+pink = '#e60891'
+
+[os]
+disabled = false
+format = '[ $symbol ]($style)'
+style = 'bg:white fg:black'
+
+[hostname]
+ssh_only = true
+ssh_symbol = ''
+style = 'bold bg:green fg:white'
+format = '[ $ssh_symbol on $hostname ]($style)'
+
+[username]
+show_always = true
+style_user = 'bold bg:white fg:black'
+style_root = 'bold bg:white fg:black'
+format = '[ $user ]($style)'
+
+[directory]
+truncation_length = 3
+truncation_symbol = '…/'
+read_only = '󰌾'
+style = "bold bg:purple fg:text"
+format = '[ $read_only$path ]($style)'
+
+[time]
+disabled = false
+time_format = '%R'
+style = 'bold bg:white fg:black'
+format = '[  $time ]($style)'
+
+[character]
+success_symbol = '[>](bold green)'
+error_symbol = '[x](bold red)'
+vimcmd_symbol = '[<](bold green)'
+vimcmd_visual_symbol = '[<](bold yellow)'
+vimcmd_replace_symbol = '[<](bold purple)'
+vimcmd_replace_one_symbol = '[<](bold purple)'
+
+[directory.substitutions]
+Documents = '󰈙'
+Downloads = ''
+Music = ''
+Pictures = ''
+# Add custom directories here.
+# Use icons from here -> https://www.nerdfonts.com/cheat-sheet
+code = ' '
+
+[c]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[cpp]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[conda]
+symbol = ''
+style = 'bold bg:blue fg:text'
+format = '[ $symbol $environment ]($style)'
+
+[dart]
+symbol = ''
+style = 'bold bg:blue fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = ''
+style = 'bold bg:blue fg:text'
+format = '[ $symbol $context ]($style)'
+
+[fortran]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = '[ $symbol ($version) ]($style)'
+
+[git_branch]
+symbol = ''
+style = 'bold bg:yellow fg:text'
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = 'bold bg:yellow fg:text'
+format = '[($all_status$ahead_behind) ]($style)'
+
+[golang]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[kotlin]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[lua]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = '[ $symbol ($version ) ]($style)'
+
+[php]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[pixi]
+symbol = '󰏗'
+style = 'bold bg:blue fg:text'
+format = '[ $symbol( $version)( $environment) ]($style)'
+
+[python]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[rlang]
+symbol = '󰟔'
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[ruby]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[rust]
+symbol = '󱘗'
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[scala]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[swift]
+symbol = ''
+style = 'bold bg:green fg:text'
+format = ' [ $symbol ($version) ]($style)'
+
+[os.symbols]
+Alpaquita = ''
+Alpine = ''
+AlmaLinux = ''
+Amazon = ''
+Android = ''
+AOSC = ''
+Arch = ''
+Artix = ''
+CachyOS = ''
+CentOS = ''
+Debian = ''
+DragonFly = ''
+Elementary = ''
+Emscripten = ''
+EndeavourOS = ''
+Fedora = ''
+FreeBSD = ''
+Garuda = '󰛓'
+Gentoo = ''
+HardenedBSD = '󰞌'
+Illumos = '󰈸'
+Ios = '󰀷'
+Kali = ''
+Linux = ''
+Mabox = ''
+Macos = ''
+Manjaro = ''
+Mariner = ''
+MidnightBSD = ''
+Mint = ''
+NetBSD = ''
+NixOS = ''
+Nobara = ''
+OpenBSD = '󰈺'
+openSUSE = ''
+OracleLinux = '󰌷'
+Pop = ''
+Raspbian = ''
+Redhat = ''
+RedHatEnterprise = ''
+RockyLinux = ''
+Redox = '󰀘'
+Solus = '󰠳'
+SUSE = ''
+Ubuntu = ''
+Unknown = ''
+Void = ''
+Windows = '󰍲'
+Zorin = ''

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Ensure Nix is available outside of direnv/devShell.
+export PATH="/nix/var/nix/profiles/default/bin:$PATH"
+
+run_commitlint() {
+    local output
+    output=$("$@" 2>&1)
+    local exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        # VSCode popup message.
+        echo "Commit rejected — use Conventional Commits format, e.g.: feat: added more modules" >&2
+        echo "" >&2
+        echo "$output" >&2
+        exit $exit_code
+    fi
+}
+
+if command -v commitlint &>/dev/null; then
+    run_commitlint commitlint --edit "$1"
+elif command -v npx &>/dev/null; then
+    run_commitlint npx --no -- commitlint --edit "$1"
+else
+    COMMITLINT=$(nix shell nixpkgs#commitlint --command which commitlint 2>/dev/null)
+    if [ -x "$COMMITLINT" ]; then
+        run_commitlint "$COMMITLINT" --edit "$1"
+    else
+        echo "commitlint: not found (install via nix develop or npm)" >&2
+        exit 1
+    fi
+fi

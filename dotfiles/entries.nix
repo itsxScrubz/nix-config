@@ -8,6 +8,13 @@
         target = ".zshrc";
     }
     {
+        module = "starship";
+        origin = "local";
+        platform = [ "darwin" "linux" ];
+        source = "starship/starship.toml";
+        target = ".config/starship.toml";
+    }
+    {
         module = "ghostty";
         origin = "local";
         platform = [ "darwin" "linux" ];

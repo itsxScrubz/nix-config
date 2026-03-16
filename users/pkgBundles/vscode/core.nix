@@ -9,7 +9,6 @@
     "johnpapa.vscode-peacock"
     "kamikillerto.vscode-colorize"
     "oderwat.indent-rainbow"
-    "seyyedkhandon.firacode"
     "tonybaloney.vscode-pets"
     "zhuangtongfa.material-theme"
 ]

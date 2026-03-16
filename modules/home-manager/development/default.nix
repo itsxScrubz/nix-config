@@ -1,7 +1,7 @@
 { myLib, ... }: {
     imports = [
         (myLib.mkSimpleHomeModules [
-            { name = "nil"; }
+            { name = "nixd"; }
         ])
     ];
 }

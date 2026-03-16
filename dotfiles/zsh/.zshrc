@@ -44,6 +44,9 @@ alias gd="git diff"
 alias gl="git log --oneline --graph"
 alias gp="git push -u origin main"
 alias ga="git add ."
+# Nix flake.
+alias fbh="flake build home"
+alias fbs="flake build system"
 
 # Keybinds.
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -74,3 +77,4 @@ flake() {
 (( $+commands[fzf] )) && source <(fzf --zsh)
 [[ -f $HOME/.zsh_plugins.zsh ]] && source $HOME/.zsh_plugins.zsh
 (( $+commands[zoxide] )) && source <(zoxide init zsh)
+(( $+commands[starship] )) && eval "$(starship init zsh)"

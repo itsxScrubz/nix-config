@@ -9,17 +9,21 @@
     # ~ Browsers.
     google-chrome.enable = false;
     vivaldi.enable = true;
+    # ~ Fonts.
+    firacode-nerd-font.enable = true;
     # ~ CLI.
     claude-code.enable = true;
+    direnv.enable = true;
     ghostty.enable = true;
     git.enable = true;
+    starship.enable = true;
     mas.enable = true;
     zoxide.enable = true;
     zsh.enable = true;
     # ~ Communication.
     discord.enable = true;
     # ~ Development.
-    nil.enable = true;
+    nixd.enable = true;
     vscode.enable = true;
     # ~ Hardware.
     logitech-g-hub.enable = true;
