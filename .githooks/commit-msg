@@ -17,14 +17,6 @@ run_commitlint() {
 
 if command -v commitlint &>/dev/null; then
     run_commitlint commitlint --edit "$1"
-elif command -v npx &>/dev/null; then
-    run_commitlint npx --no -- commitlint --edit "$1"
 else
-    COMMITLINT=$(nix shell nixpkgs#commitlint --command which commitlint 2>/dev/null)
-    if [ -x "$COMMITLINT" ]; then
-        run_commitlint "$COMMITLINT" --edit "$1"
-    else
-        echo "commitlint: not found (install via nix develop or npm)" >&2
-        exit 1
-    fi
+    run_commitlint nix shell nixpkgs#commitlint --command commitlint --edit "$1"
 fi

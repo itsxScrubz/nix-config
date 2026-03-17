@@ -23,7 +23,9 @@
     # ~ Communication.
     discord.enable = true;
     # ~ Development.
+    fnm.enable = true;
     nixd.enable = true;
+    pnpm.enable = true;
     vscode.enable = true;
     # ~ Hardware.
     logitech-g-hub.enable = true;

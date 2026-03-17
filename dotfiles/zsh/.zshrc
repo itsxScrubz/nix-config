@@ -74,7 +74,10 @@ flake() {
 }
 
 # ~ Plugins.
-(( $+commands[fzf] )) && source <(fzf --zsh)
 [[ -f $HOME/.zsh_plugins.zsh ]] && source $HOME/.zsh_plugins.zsh
+
+# ~ Shell Integrations.
+(( $+commands[fzf] )) && source <(fzf --zsh)
 (( $+commands[zoxide] )) && source <(zoxide init zsh)
+(( $+commands[fnm] )) && eval "$(fnm env)"
 (( $+commands[starship] )) && eval "$(starship init zsh)"
