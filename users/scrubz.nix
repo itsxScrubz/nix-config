@@ -19,13 +19,23 @@
     starship.enable = true;
     mas.enable = true;
     zoxide.enable = true;
+    ssh.enable = true;
+    ssh.servers."scrubz.dev" = {
+        host = "ssh.scrubz.dev";
+        user = "scrubz";
+        extraOptions = {
+            "SetEnv" = "TERM=xterm";
+        };
+    };
     zsh.enable = true;
     # ~ Communication.
     discord.enable = true;
     # ~ Development.
+    docker-desktop.enable = true;
     fnm.enable = true;
     nixd.enable = true;
     pnpm.enable = true;
+    postgresql.enable = true;
     vscode.enable = true;
     # ~ Hardware.
     logitech-g-hub.enable = true;

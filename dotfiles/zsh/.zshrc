@@ -23,6 +23,7 @@ setopt NO_CASE_GLOB
 # ~ Environment.
 export EDITOR="code"
 export VISUAL="code"
+export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
 
 # ~ Aliases.
 # ls
