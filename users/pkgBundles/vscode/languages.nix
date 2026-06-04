@@ -1,0 +1,16 @@
+[
+    "anthropic.claude-code"
+    "jnoortheen.nix-ide"
+    "arrterian.nix-env-selector"
+    "sumneko.lua"
+    "diemasmichiels.emulate"
+    "ms-vscode.powershell"
+    "bmalehorn.vscode-fish"
+    "foxundermoon.shell-format"
+    "bbenoist.qml"
+    "ms-vscode.makefile-tools"
+    "ms-vscode.extension-test-runner"
+    "yzhang.markdown-all-in-one"
+    "redhat.vscode-xml"
+    "redhat.vscode-yaml"
+]

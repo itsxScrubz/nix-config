@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# ~ Update the flake description to match the repo folder name.
+# Run from anywhere — the script resolves the repo root from its own location.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+# Verify we're actually in the repo.
+if [[ ! -f "$REPO_DIR/flake.nix" ]]; then
+    echo "Error: Cannot find flake.nix at $REPO_DIR"
+    exit 1
+fi
+
+REPO_NAME="$(basename "$REPO_DIR")"
+echo "Updating flake name to: $REPO_NAME"
+
+# Update flake.nix description with the new repo name.
+sed -i '' -E "s|description = \"[^\"]+\"|description = \"$REPO_NAME - An opinionated and extremely modular Darwin/Linux flake.\"|" "$REPO_DIR/flake.nix"
+echo "  Updated flake.nix description"
+
+echo ""
+echo "Done!"

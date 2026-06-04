@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# ~ Update cached flake path and VSCode settings after moving the repo.
+# Run from anywhere — the script resolves the repo root from its own location.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+# Verify we're actually in the repo.
+if [[ ! -f "$REPO_DIR/flake.nix" ]]; then
+    echo "Error: Cannot find flake.nix at $REPO_DIR"
+    exit 1
+fi
+
+echo "Updating flake path to: $REPO_DIR"
+
+# 1. Update the flake-dir cache so fbh/fbs work immediately.
+mkdir -p ~/.config/shell
+echo "$REPO_DIR" > ~/.config/shell/flake-dir
+echo "  Updated ~/.config/shell/flake-dir"
+
+# 2. Update VSCode settings with the new absolute path.
+VSCODE_SETTINGS="$REPO_DIR/.vscode/settings.json"
+if [[ -f "$VSCODE_SETTINGS" ]]; then
+    sed -i '' -E "s|builtins\\.getFlake \\\\\"[^\\\\\"]+\\\\\"|builtins.getFlake \\\\\"$REPO_DIR\\\\\"|g" "$VSCODE_SETTINGS"
+    echo "  Updated .vscode/settings.json"
+fi
+
+echo ""
+echo "Done! You can now use fbh/fbs from any shell."

@@ -1,0 +1,22 @@
+environment {
+    terminal "Ghostty"
+    textEditor "Visual Studio Code"
+}
+behavior {
+    theme "Kon"
+    setCurrentPathAsWindowTitle true
+    actions {
+        core.tab.new.useDefaults true
+    }
+    files {
+        defaultLocation "~"
+    }
+    table {
+        defaults {
+            showHiddenFiles true
+        }
+    }
+}
+etty {
+    shell "/run/current-system/sw/bin/zsh"
+}

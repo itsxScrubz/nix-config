@@ -1,0 +1,56 @@
+name: Default
+version: 1.0.0
+schema: v1
+models:
+  - name: Chat Smart (14B)
+    provider: ollama
+    model: huihui_ai/qwen2.5-1m-abliterated:14b
+    apiBase: "@APIBASE@"
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Chat (7B)
+    provider: ollama
+    model: huihui_ai/qwen2.5-1m-abliterated:7b
+    apiBase: "@APIBASE@"
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Coding Light (14B)
+    provider: ollama
+    model: qwen2.5-coder:14b
+    apiBase: "@APIBASE@"
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Coding Heavy (30B)
+    provider: ollama
+    model: qwen3-coder:30b
+    apiBase: "@APIBASE@"
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Qwen Coder 1.5B (Autocomplete)
+    provider: ollama
+    model: qwen2.5-coder:1.5b-base
+    apiBase: "@APIBASE@"
+    roles:
+      - autocomplete
+  - name: Nomic Embed
+    provider: ollama
+    model: nomic-embed-text:latest
+    apiBase: "@APIBASE@"
+    roles:
+      - embed
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase

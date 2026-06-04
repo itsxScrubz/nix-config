@@ -1,0 +1,12 @@
+[
+    "biomejs.biome"
+    "bradlc.vscode-tailwindcss"
+    "ecmel.vscode-html-css"
+    "esbenp.prettier-vscode"
+    "ritwickdey.liveserver"
+    "svelte.svelte-vscode"
+    "syler.sass-indented"
+    "bierner.jsdoc-markdown-highlighting"
+    "crystal-spider.jsdoc-generator"
+    "mrmlnc.vscode-scss"
+]

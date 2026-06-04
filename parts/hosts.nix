@@ -1,0 +1,152 @@
+{ inputs, lib, self, ... }: with lib;
+let
+    # ~ Host configs.
+    # ! You MUST use the hostConfigs.myMachineName naming structure
+    # ! in order for the flake to automatically pick up the right
+    # ! machine to rebuild for.
+    hostConfigs = {
+        mini = { platform = "darwin"; system = "aarch64-darwin"; };
+        laptop = { platform = "linux";  system = "x86_64-linux";   };
+    };
+    darwinSystem = inputs.nix-darwin.lib.darwinSystem;
+    linuxSystem = inputs.nixpkgs.lib.nixosSystem;
+    # ~ Lib helpers.
+    myLib = import ../lib/modules.nix { inherit lib; };
+    # ~ Load host config and modules.
+    loadHostConfig = hostName:
+    let
+        baseConfig = import ../hosts/${hostName}/config.nix;
+    in baseConfig // {
+        users = builtins.mapAttrs (_: userConfig:
+            let
+                bundles = userConfig.bundles or [];
+                merged = foldl' recursiveUpdate {} (map import bundles);
+                config = removeAttrs userConfig [ "bundles" ];
+            in recursiveUpdate merged config
+        ) baseConfig.users;
+    };
+    systemModules = [ (inputs.import-tree [ ../modules/system ]) ];
+    homebrewModules = [ (inputs.import-tree [ ../modules/homebrew ]) ];
+    # ~ HM modules (auto-discovered, applied per-user).
+    hmModules = inputs.import-tree [ ../modules/home-manager ];
+    # ~ Standalone home-manager config for a single user on a given host.
+    mkHomeConfig = hostName: userName: userConfig: { system, platform, ... }:
+    let
+        hostConfig = loadHostConfig hostName;
+        pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [
+                inputs.nix-vscode-extensions.overlays.default
+                # ~ direnv 2.37.1 checkPhase hangs on darwin sandbox; skip tests.
+                (final: prev: {
+                    direnv = prev.direnv.overrideAttrs (_: { doCheck = false; });
+                })
+                # ~ pipx 1.8.0 test suite broken by newer `packaging` lib (canonicalized
+                # ~ name now has a space around `@`); skip tests until nixpkgs catches up.
+                (final: prev: {
+                    pipx = prev.pipx.overrideAttrs (_: { doCheck = false; doInstallCheck = false; });
+                })
+            ];
+        };
+        platformModules = optionals (platform == "darwin") [
+            inputs.mac-app-util.homeManagerModules.default
+        ];
+    in
+    inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+            ../hosts/_shared/home.nix
+            inputs.sops-nix.homeManagerModules.sops
+            hmModules
+        ] ++ platformModules ++ [
+            { _module.args.userConfig = userConfig; }
+            { _module.args.userName = userName;   }
+        ];
+        extraSpecialArgs = { inherit inputs hostConfig self myLib; };
+    };
+    # ~ Darwin host setup (system-level only; home-manager is standalone).
+    mkDarwinHost = hostName: { system, ... }:
+    let
+        hostConfig = loadHostConfig hostName;
+        primaryUser = hostConfig.primaryUser;
+    in
+    darwinSystem {
+        inherit system;
+        specialArgs = { inherit inputs hostConfig myLib; platform = "darwin"; };
+        modules = systemModules ++ homebrewModules ++ [
+            (import ../hosts/${hostName})
+            inputs.nix-homebrew.darwinModules.nix-homebrew
+            inputs.mac-app-util.darwinModules.default
+            {
+                nix-homebrew = {
+                    enable = true;
+                    enableRosetta = true;
+                    user = primaryUser;
+                    # ~ Declarative taps disabled: Homebrew commit f0858cca0d (~Jun 2026) changed
+                    # ~ tap validation to compare the tap root's realpath, which rejects any
+                    # ~ /nix/store-backed tap (nix-homebrew#148). Both `mutableTaps = true` and
+                    # ~ `mutableTaps = false` still resolve to /nix/store paths. Until upstream
+                    # ~ lands a fix, let brew tap `homebrew/{core,cask,bundle}` itself — they
+                    # ~ auto-tap on first formula/cask install during `brew bundle`. Restore the
+                    # ~ block below (and flip `mutableTaps` if desired) once #148 is resolved.
+                    # taps = {
+                    #     "homebrew/homebrew-core" = inputs.homebrew-core;
+                    #     "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                    #     "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                    # };
+                    mutableTaps = true;
+                };
+            }
+            {
+                users.users = mapAttrs (name: _: {
+                    name = name;
+                    home = "/Users/${name}";
+                }) hostConfig.users;
+            }
+        ];
+    };
+    # ~ Linux host setup (system-level only; home-manager is standalone).
+    mkNixosHost = hostName: { system, ... }:
+    let
+        hostConfig = loadHostConfig hostName;
+    in
+    linuxSystem {
+        inherit system;
+        specialArgs = { inherit inputs hostConfig myLib; platform = "linux"; };
+        modules = systemModules ++ [
+            inputs.sops-nix.nixosModules.sops
+            (import ../hosts/${hostName})
+            {
+                users.users = mapAttrs (name: _: {
+                    name = name;
+                    home = "/home/${name}";
+                    isNormalUser = true;
+                    extraGroups = [ "wheel" "sudo" ];
+                }) hostConfig.users;
+            }
+        ];
+    };
+    # ~ Generate homeConfigurations for every user on every host.
+    mkHomeConfigs = hostName: meta:
+    let
+        hostConfig = loadHostConfig hostName;
+    in
+    mapAttrs' (userName: userConfig:
+        nameValuePair "${userName}@${hostName}"
+            (mkHomeConfig hostName userName userConfig meta)
+    ) hostConfig.users;
+    homeConfigs = foldl' mergeAttrs {} (mapAttrsToList (_: v: v) (mapAttrs mkHomeConfigs hostConfigs));
+    # ~ Setup hosts.
+    mkHost = hostName: meta:
+        if meta.platform == "linux"
+        then { nixos = mkNixosHost hostName meta; }
+        else { darwin = mkDarwinHost hostName meta; };
+    builtHosts = mapAttrs mkHost hostConfigs;
+    nixosHosts = filterAttrs (_: v: v ? nixos)  builtHosts;
+    darwinHosts = filterAttrs (_: v: v ? darwin) builtHosts;
+in {
+    flake.nixosConfigurations = mapAttrs (_: v: v.nixos)  nixosHosts;
+    flake.darwinConfigurations = mapAttrs (_: v: v.darwin) darwinHosts;
+    flake.homeConfigurations = homeConfigs;
+}

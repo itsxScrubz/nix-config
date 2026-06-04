@@ -1,0 +1,17 @@
+[
+    "continue.continue"
+    "docker.docker"
+    "george3447.docker-run"
+    "github.remotehub"
+    "github.vscode-github-actions"
+    "ms-azuretools.vscode-containers"
+    "ms-python.python"
+    "ms-vscode-remote.remote-containers"
+    "ms-vscode-remote.remote-ssh"
+    "ms-vscode-remote.remote-ssh-edit"
+    "ms-vscode.remote-explorer"
+    "ms-vscode.remote-repositories"
+    "ms-vscode.azure-repos"
+    "rust-lang.rust-analyzer"
+    "tauri-apps.tauri-vscode"
+]

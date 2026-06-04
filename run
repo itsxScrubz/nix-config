@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# ~ Script runner — dispatches to scripts in the scripts/ directory.
+# Usage: ./run <folder> <script> [args...]
+# Example: ./run update flakePath
+#          ./run darwin setHostname MyMac
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPTS_DIR="$SCRIPT_DIR/scripts"
+
+# List available scripts grouped by folder.
+list_scripts() {
+    echo "Available scripts:"
+    for folder in "$SCRIPTS_DIR"/*/; do
+        [[ -d "$folder" ]] || continue
+        local folder_name
+        folder_name="$(basename "$folder")"
+        for script in "$folder"/*; do
+            [[ -f "$script" && -x "$script" ]] || continue
+            echo "  $folder_name $(basename "$script")"
+        done
+    done
+}
+
+if [[ $# -lt 2 ]]; then
+    echo "Usage: ./run <folder> <script> [args...]"
+    echo ""
+    list_scripts
+    exit 1
+fi
+
+FOLDER="$1"
+SCRIPT="$2"
+shift 2
+
+TARGET="$SCRIPTS_DIR/$FOLDER/$SCRIPT"
+
+if [[ ! -f "$TARGET" ]]; then
+    echo "Error: Script not found: $FOLDER/$SCRIPT"
+    echo ""
+    list_scripts
+    exit 1
+fi
+
+if [[ ! -x "$TARGET" ]]; then
+    echo "Error: Script is not executable: $FOLDER/$SCRIPT"
+    exit 1
+fi
+
+exec "$TARGET" "$@"
