@@ -9,8 +9,13 @@
 # By managing the plist declaratively via nix-darwin, all three env vars are
 # reproducible on re-provision and brew interactions can't clobber them.
 #
-# The ollama binary still comes from brew — we only own the launchd agent,
-# not the package itself. `/opt/homebrew/opt/ollama/bin/ollama` stays live.
+# The ollama binary comes from the official **cask** (`ollama-app`), not the
+# homebrew formula — the formula's 0.30.x build never compiles the llama.cpp
+# `llama-server` runner, so GGUF models fail with "llama-server binary not
+# found". The cask bundles prebuilt runners inside Ollama.app; we run its
+# binary headless via this agent and never open the GUI app (opening it would
+# start a second server and collide on port 11434). We own the launchd agent,
+# not the package. Binary: `/Applications/Ollama.app/Contents/Resources/ollama`.
 #
 # ── Migration steps (one-time, after first `fbs` with this module) ──
 #   1. brew services stop ollama
@@ -43,7 +48,7 @@
     launchd.user.agents.ollama = {
         serviceConfig = {
             ProgramArguments = [
-                "/opt/homebrew/opt/ollama/bin/ollama"
+                "/Applications/Ollama.app/Contents/Resources/ollama"
                 "serve"
             ];
             KeepAlive = true;
